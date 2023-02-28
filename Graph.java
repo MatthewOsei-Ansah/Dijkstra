@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.ArrayList;
 
 public class Graph<T>{
@@ -64,6 +66,7 @@ public class Graph<T>{
                 continue;
             }else if(CurrentNode.getNode().equals(node)){
                 found = true;
+                break;
             }
         }
 
@@ -76,6 +79,7 @@ public class Graph<T>{
                 continue;
             }else if(Currentnode2.getNode().equals(addnode)){
                 found2 = true;
+                break;
             }
         }
 
@@ -88,6 +92,7 @@ public class Graph<T>{
                 continue;
             }else if(CurrentNode.getNode().equals(node)){
                 CurrentNode.addConnection(addnode, weight);
+                break;
             }
         }
 
@@ -96,6 +101,7 @@ public class Graph<T>{
                 continue;
             }else if(Currentnode2.getNode().equals(addnode)){
                 Currentnode2.addConnection(node, weight);
+                break;
             }
         }
     }
@@ -194,6 +200,7 @@ public class Graph<T>{
                 } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
                     found = true;
                     PQ.append(value, 0, null);
+                    break;
                 }
             }
         }else {
@@ -203,18 +210,22 @@ public class Graph<T>{
             throw new IllegalArgumentException("Start node was not found");
         }
 
-       for(Node<T> value : Array) {
-           if (value == null){
-               continue;
-           } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
-               continue;
-           }else{
-               PQ.append(value, Integer.MAX_VALUE, null);
-           }
-       }
+        for(Node<T> value : Array) {
+            if (value == null){
+                continue;
+            } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
+                continue;
+            }else{
+                PQ.append(value, Integer.MAX_VALUE, null);
+            }
+        }
 
-       Popped = PQ.pop();
-       Popped.getNode().getConnections();
-
+        for(int i = 0; i < PQ.length(); i++) {
+            Popped = PQ.pop();
+            Connector<T>[] Conne
+            for (Connector<T> Item : Popped.getNode().getConnections()) {
+                PQ.append(new Node<T>(Item.getNode()), Item.getWeight(), Popped.getNode().getNode());
+            }
+        }
     }
 }
