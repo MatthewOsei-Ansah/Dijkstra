@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.ArrayList;
 
 public class Connections<T>{
@@ -32,7 +34,7 @@ public class Connections<T>{
         int i = 1;
         Integer Address;
         Connector<T> element = new Connector<T>(Value, Weight);
-        Address = Math.abs(Value.hashCode() % 11);
+        Address = Math.abs(Value.hashCode() % 7);
         for(Connector<T> value : Array){
             if(value == null){
                 continue;
