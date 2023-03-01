@@ -84,13 +84,18 @@ public class LinkedList<T> {
 
     public Element<T> pop() {
         Element<T> popped;
-        if (!isEmpty()) {
+        if (!isEmpty() && length > 1) {
             popped = front;
             front.Next().Previous(null);
             front = front.Next();
             length--;
             return popped;
-        } else if (isEmpty()) {
+        }else if(length == 1) {
+            popped = front;
+            front = null;
+            length --;
+            return popped;
+        }else if (isEmpty()) {
             throw new UnsupportedOperationException();
         }
         return front;
