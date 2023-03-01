@@ -1,5 +1,3 @@
-package com.company;
-
 import java.util.ArrayList;
 
 public class Graph<T>{
@@ -191,6 +189,7 @@ public class Graph<T>{
         Integer Address;
         boolean found = false;
         LinkedList<T> PQ = new LinkedList<>();
+        LinkedList<T> FinalPQ = new LinkedList<>();
         Element<T> Popped;
 
         if (!isEmpty()){
@@ -222,9 +221,13 @@ public class Graph<T>{
 
         for(int i = 0; i < PQ.length(); i++) {
             Popped = PQ.pop();
-            Connector<T>[] Conne
-            for (Connector<T> Item : Popped.getNode().getConnections()) {
-                PQ.append(new Node<T>(Item.getNode()), Item.getWeight(), Popped.getNode().getNode());
+            Connector<T>[] Connections = Popped.getNode().getConnections();
+            for (Connector<T> Item : Connections) {
+                if(Item == null){
+                    continue;
+                }else {
+                    FinalPQ.append(new Node<T>(Item.getNode()), Item.getWeight(), Popped.getNode().getNode());
+                }
             }
         }
     }
