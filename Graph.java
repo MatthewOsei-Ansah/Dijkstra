@@ -1,8 +1,11 @@
+package com.company;
+
 import java.util.ArrayList;
 
 public class Graph<T>{
     private final int MAX_SIZE = 7;
     private Node[] Array = {null,null,null,null,null,null,null};
+    private QueueNode[] PArray = {null,null,null,null,null,null,null};
     private int length = 0;
 
     public String Display()
@@ -190,7 +193,8 @@ public class Graph<T>{
         boolean found = false;
         LinkedList<T> PQ = new LinkedList<>();
         LinkedList<T> FinalPQ = new LinkedList<>();
-        Element<T> Popped;
+        QueueNode<T> Popped;
+        int j = 1;
 
         if (!isEmpty()){
             for (Node<T> value : Array) {
@@ -198,12 +202,12 @@ public class Graph<T>{
                     continue;
                 } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
                     found = true;
-                    PQ.append(value, 0, null);
+                    PArray[0] = new QueueNode(value, 0);
                     break;
                 }
             }
         }else {
-            throw new IllegalArgumentException("Dictionary is empty");
+            throw new IllegalArgumentException("Graph is empty");
         }
         if(!found){
             throw new IllegalArgumentException("Start node was not found");
@@ -215,12 +219,15 @@ public class Graph<T>{
             } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
                 continue;
             }else{
-                PQ.append(value, Integer.MAX_VALUE, null);
+                PArray[j] = new QueueNode(value, Integer.MAX_VALUE);
             }
         }
 
         for(int i = 0; i < PQ.length(); i++) {
-            Popped = PQ.pop();
+            Popped = PArray[i];
+            if(Popped == null){
+                continue;
+            }
             Connector<T>[] Connections = Popped.getNode().getConnections();
             for (Connector<T> Item : Connections) {
                 if(Item == null){
