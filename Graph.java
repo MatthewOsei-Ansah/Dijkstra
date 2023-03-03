@@ -202,7 +202,7 @@ public class Graph<T>{
                     continue;
                 } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
                     found = true;
-                    PArray[0] = new QueueNode(value, 0);
+                    PArray[0] = new QueueNode(value, 0, null);
                     break;
                 }
             }
@@ -219,7 +219,7 @@ public class Graph<T>{
             } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
                 continue;
             }else{
-                PArray[j] = new QueueNode(value, Integer.MAX_VALUE);
+                PArray[j] = new QueueNode(value, Integer.MAX_VALUE, null);
             }
         }
 
@@ -233,7 +233,7 @@ public class Graph<T>{
                 if(Item == null){
                     continue;
                 }else {
-                    FinalPQ.append(new Node<T>(Item.getNode()), Item.getWeight(), Popped.getNode().getNode());
+                    FinalPQ.append(new QueueNode<T>(new Node<T>(Item.getNode()), Item.getWeight() + Popped.getWeight(), Popped));
                 }
             }
         }
