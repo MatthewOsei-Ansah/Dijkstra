@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.ArrayList;
 
 public class LinkedList<T> {
@@ -23,35 +25,31 @@ public class LinkedList<T> {
         return (length() == 0);
     }
 
-    public void append(Node<T> value, int weight, T previousNode) {
+    public void append(QueueNode<T> value) {
         Element<T> Current;
         Element<T> Tail;
         Element<T> Insert;
-        weight = Math.abs(weight);
 
         if (front != null) {
             Current = front;
 
             while (Current.Next() != null) {
-                if(Current.getNode() == value){
-                    if(Current.getWeight() < weight){
-                        Current = Current.Next();
-                        continue;
-                    }else{
-                        Insert = new Element<T>(value, weight,previousNode,null, null);
+                if(Current.getNode().getNode().getNode() == value.getNode().getNode()){
+                    if (Current.getNode().getWeight() >= value.getWeight()) {
+                        Insert = new Element<T>(value, null, null);
                         Insert.Next(Current.Next());
                         Insert.Previous(Current.Previous());
                         Current.Next().Previous(Insert);
                         Current.Previous().Next(Insert);
                         Current.Next(null);
                         Current.Previous(null);
-                        return;
                     }
+                    return;
                 }
-                if(Current.getWeight() < weight){
+                if(Current.getNode().getWeight() < value.getWeight()){
                     Current = Current.Next();
                 } else{
-                    Insert = new Element<T>(value, weight,previousNode,null, null);
+                    Insert = new Element<T>(value,null, null);
                     Insert.Next(Current);
                     Insert.Previous(Current.Previous());
                     Current.Previous(Insert);
@@ -61,23 +59,21 @@ public class LinkedList<T> {
                 }
 
             }
-            if(Current.getNode() == value) {
-                if (Current.getWeight() < weight) {
-                    return;
-                } else {
-                    Insert = new Element<T>(value, weight, previousNode, null, null);
+            if(Current.getNode().getNode().getNode() == value.getNode().getNode()) {
+                if (Current.getNode().getWeight() >= value.getWeight()) {
+                    Insert = new Element<T>(value, null, null);
                     Insert.Previous(Current.Previous());
                     Current.Previous().Next(Insert);
                     Current.Previous(null);
-                    return;
                 }
+                return;
             }
 
-            Tail = new Element(value, weight,previousNode,Current, null);
+            Tail = new Element(value,Current, null);
             Current.Next(Tail);
             length++;
         } else {
-            front = new Element(value, 0,null,null,null);
+            front = new Element(value, null,null);
             length++;
         }
     }
