@@ -1,15 +1,13 @@
+package com.company;
+
 public class Element<T> {
     private Element<T> previous;
     private Element<T> next;
-    private T PreviousNode;
-    private Node<T> Node;
-    private int Weight;
+    private QueueNode<T> Node;
 
-    public Element(Node<T> node, int weight,T previousNode ,Element<T> previous, Element<T> next)
+    public Element(QueueNode<T> node,Element<T> previous, Element<T> next)
     {
         this.Node = node;
-        this.Weight = weight;
-        this.PreviousNode = previousNode;
         this.previous = previous;
         this.next = next;
 
@@ -21,7 +19,7 @@ public class Element<T> {
         return Node.toString();
     }
 
-    public Node<T> getNode()
+    public QueueNode<T> getNode()
     {
         return Node;
     }
@@ -46,23 +44,9 @@ public class Element<T> {
         next = value;
     }
 
-    public T getPreviousNode() {
-        return PreviousNode;
-    }
 
-    public void setPreviousNode(T previousNode) {
-        PreviousNode = previousNode;
-    }
-
-    public int getWeight() {
-        return Weight;
-    }
-
-    public void setNode(Node<T> node) {
+    public void setNode(QueueNode<T> node) {
         Node = node;
     }
 
-    public void setWeight(int weight) {
-        Weight = weight;
-    }
 }
