@@ -191,10 +191,10 @@ public class Graph<T>{
     public void Dijkstra(T StartNode){
         Integer Address;
         boolean found = false;
-        LinkedList<T> PQ = new LinkedList<>();
         LinkedList<T> FinalPQ = new LinkedList<>();
         QueueNode<T> Popped;
         int j = 1;
+        QueueNode[] Path = new QueueNode[MAX_SIZE];
 
         if (!isEmpty()){
             for (Node<T> value : Array) {
@@ -220,11 +220,14 @@ public class Graph<T>{
                 continue;
             }else{
                 PArray[j] = new QueueNode(value, Integer.MAX_VALUE, null);
+                j ++;
             }
         }
 
-        for(int i = 0; i < PQ.length(); i++) {
+        for(int i = 0; i < MAX_SIZE; i++) {
+            int PathWeight = 0;
             Popped = PArray[i];
+            Path[i] = Popped;
             if(Popped == null){
                 continue;
             }
@@ -233,9 +236,16 @@ public class Graph<T>{
                 if(Item == null){
                     continue;
                 }else {
-                    FinalPQ.append(new QueueNode<T>(new Node<T>(Item.getNode()), Item.getWeight() + Popped.getWeight(), Popped));
+                    for(QueueNode<T> Node : Path){
+                        if(Node == null){
+                            continue;
+                        }
+                        PathWeight += Node.getWeight();
+                    }
+                    FinalPQ.append(new QueueNode<T>(new Node<T>(Item.getNode()), Item.getWeight() + PathWeight, Popped));
                 }
             }
         }
+        System.out.println(FinalPQ.asArray());
     }
 }
