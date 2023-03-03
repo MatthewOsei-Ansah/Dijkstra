@@ -9,16 +9,16 @@ public class LinkedList<T> {
     public static void main(String[] args) {
     }
 
-    public String[] asArray() {
-        ArrayList<String> a = new ArrayList<String>();
+    public String asArray() {
+        ArrayList<String> a = new ArrayList<>();
         Element<T> e = front;
 
         while (e != null) {
-            a.add(e.toString());
+            a.add(e.getNode().getNode().getNode().toString());
             e = e.Next();
         }
 
-        return a.toArray(new String[a.size()]);
+        return a.toString();
     }
 
     public boolean isEmpty() {
