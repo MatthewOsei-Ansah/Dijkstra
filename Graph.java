@@ -1,11 +1,9 @@
-package com.company;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Graph<T>{
     private final int MAX_SIZE = 7;
     private Node[] Array = {null,null,null,null,null,null,null};
-    private QueueNode[] PArray = {null,null,null,null,null,null,null};
     private int length = 0;
 
     public String Display()
@@ -189,12 +187,13 @@ public class Graph<T>{
     }
 
     public void Dijkstra(T StartNode){
-        Integer Address;
         boolean found = false;
+        boolean FullyExplored = false;
         LinkedList<T> FinalPQ = new LinkedList<>();
         QueueNode<T> Popped;
-        int j = 1;
-        QueueNode[] Path = new QueueNode[MAX_SIZE];
+        int j = 0;
+        QueueNode[] PArray = new QueueNode[MAX_SIZE - 1];
+        QueueNode[] Explored = new QueueNode[MAX_SIZE];
 
         if (!isEmpty()){
             for (Node<T> value : Array) {
@@ -202,7 +201,7 @@ public class Graph<T>{
                     continue;
                 } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
                     found = true;
-                    PArray[0] = new QueueNode(value, 0, null);
+                    FinalPQ.append(new QueueNode<>(value,0,null));
                     break;
                 }
             }
@@ -226,8 +225,7 @@ public class Graph<T>{
 
         for(int i = 0; i < MAX_SIZE; i++) {
             int PathWeight = 0;
-            Popped = PArray[i];
-            Path[i] = Popped;
+            Popped = FinalPQ.pop().getNode();
             if(Popped == null){
                 continue;
             }
@@ -236,16 +234,36 @@ public class Graph<T>{
                 if(Item == null){
                     continue;
                 }else {
-                    for(QueueNode<T> Node : Path){
-                        if(Node == null){
-                            continue;
+                    for(QueueNode<T> Visited: Explored){
+                        if(Visited == null){
+                            break;
                         }
-                        PathWeight += Node.getWeight();
+                        if(Visited.getNode().getNode() == Item.getNode()){
+                            FullyExplored = true;
+                            break;
+                        }
                     }
-                    FinalPQ.append(new QueueNode<T>(new Node<T>(Item.getNode()), Item.getWeight() + PathWeight, Popped));
+                    if(!FullyExplored) {
+                        for (QueueNode<T> Node : PArray) {
+                            if (Node.getNode().getNode() == Item.getNode()) {
+                                PathWeight = (Popped.getWeight() + Item.getWeight());
+                                Node.setWeight(PathWeight);
+                                Node.setPreviousNode(Popped);
+                                FinalPQ.append(Node);
+                                PathWeight = 0;
+                                break;
+                            }
+                        }
+                    }else{
+                        FullyExplored = false;
+                        continue;
+                    }
                 }
             }
+            Explored[i] = Popped;
         }
-        System.out.println(FinalPQ.asArray());
+        for(QueueNode<T> P: Explored){
+            System.out.println("\n" + P.getNode().getNode() + " : " + P.getWeight() + " Path: " + P.Path());
+        }
     }
 }
