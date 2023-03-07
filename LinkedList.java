@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.ArrayList;
 
 public class LinkedList<T> {
@@ -74,14 +76,34 @@ public class LinkedList<T> {
                         Insert.Next(Current);
                         Insert.Previous(Current.Previous());
                         Current.Previous(Insert);
+                        Front = Insert;
+                        Length ++;
                     } else {
                         Insert = new Element<T>(value, null, null);
                         Insert.Previous(Current.Previous());
                         Current.Previous().Next(Insert);
                         Current.Previous(null);
+                        Length ++;
                     }
                     return;
                 }
+            }
+            if(Current.getNode().getWeight() > value.getWeight()){
+                if (Current == Front) {
+                    Insert = new Element<T>(value, null, null);
+                    Insert.Next(Current);
+                    Insert.Previous(Current.Previous());
+                    Current.Previous(Insert);
+                    Front = Insert;
+                    Length ++;
+                } else {
+                    Insert = new Element<T>(value, null, null);
+                    Insert.Previous(Current.Previous());
+                    Current.Previous().Next(Insert);
+                    Current.Previous(null);
+                    Length ++;
+                }
+                return;
             }
             Tail = new Element(value, Current, null);
             Current.Next(Tail);
@@ -89,50 +111,44 @@ public class LinkedList<T> {
         }else {
             Front = new Element(value, null, null);
             Length++;
-            }
         }
+    }
 
 
-        public Element<T> pop() {
-            Element<T> popped;
-            if (!isEmpty() && Length > 1) {
-                popped = Front;
-                Front.Next().Previous(null);
-                Front = Front.Next();
-                Length--;
-                return popped;
-            } else if (Length == 1) {
-                popped = Front;
-                Front = null;
-                Length--;
-                return popped;
-            } else if (isEmpty()) {
-                throw new UnsupportedOperationException("Linked List is empty");
-            }
-            return Front;
+    public Element<T> pop() {
+        Element<T> popped;
+        if (!isEmpty() && Length > 1) {
+            popped = Front;
+            Front.Next().Previous(null);
+            Front = Front.Next();
+            Length--;
+            return popped;
+        } else if (Length == 1) {
+            popped = Front;
+            Front = null;
+            Length--;
+            return popped;
+        } else if (isEmpty()) {
+            throw new UnsupportedOperationException("Linked List is empty");
         }
-        public int length() {
-            return Length;
-        }
+        return Front;
+    }
+    public int length() {
+        return Length;
+    }
 
-        public QueueNode<T> search (QueueNode < T > value) {//Return true if the value exists in the Linked List
-            boolean found = false;
-            Element<T> Current = Front;
-            QueueNode<T> FoundValue;
-            if (!isEmpty()) {
-                while (Current.Next() != null) {
-                    if (Current.getNode().getNode().getNode() == value.getNode().getNode()) {
-                        FoundValue = Current.getNode();
-                        return FoundValue;
-                    } else {
-                        Current = Current.Next();
-                    }
+    public QueueNode<T> search (QueueNode <T> value) {//Return true if the value exists in the Linked List
+        Element<T> Current = Front;
+        QueueNode<T> FoundValue = null;
+        if (!isEmpty()) {
+            while (Current.Next() != null) {
+                if (Current.getNode().getNode().getNode() == value.getNode().getNode()) {
+                    FoundValue = Current.getNode();
+                } else {
+                    Current = Current.Next();
                 }
             }
-            if (!found) {
-                throw new IllegalArgumentException("Node with corresponding name not found");
-            } else {
-                return null;
-            }
         }
+        return FoundValue;
+    }
 }
