@@ -1,5 +1,3 @@
-package com.company;
-
 import java.util.ArrayList;
 
 public class LinkedList<T> {
@@ -29,6 +27,7 @@ public class LinkedList<T> {
         Element<T> Current;
         Element<T> Tail;
         Element<T> Insert;
+        Element Search;
 
         if (Front != null) {
             Current = Front;
@@ -43,6 +42,23 @@ public class LinkedList<T> {
                         Current.Previous().Next(Insert);
                         Current.Next(null);
                         Current.Previous(null);
+                        Search = Insert;
+                        while(Search.Next() != null){
+                            Search = Search.Next();
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()) {
+                                if (Search.Next() == null) {
+                                    Search.Previous().Next(null);
+                                    return;
+                                }
+                            }
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()){
+                                Search.Next().Next().Previous(Search.Next().Previous());
+                                Search.Next().Previous().Next(Search.Next().Next());
+                                return;
+                            }
+                        }
                     }
                     return;
                 }
@@ -55,6 +71,23 @@ public class LinkedList<T> {
                         Insert.Previous(Current.Previous());
                         Current.Previous(Insert);
                         Front = Insert;
+                        Search = Insert;
+                        while(Search.Next() != null){
+                            Search = Search.Next();
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()) {
+                                if (Search.Next() == null) {
+                                    Search.Previous().Next(null);
+                                    return;
+                                }
+                            }
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()){
+                                Search.Next().Next().Previous(Search.Next().Previous());
+                                Search.Next().Previous().Next(Search.Next().Next());
+                                return;
+                            }
+                        }
                         Length++;
                         return;
                     } else {
@@ -63,6 +96,23 @@ public class LinkedList<T> {
                         Insert.Previous(Current.Previous());
                         Current.Previous(Insert);
                         Current.Previous().Next(Insert);
+                        Search = Insert;
+                        while(Search.Next() != null){
+                            Search = Search.Next();
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()) {
+                                if (Search.Next() == null) {
+                                    Search.Previous().Next(null);
+                                    return;
+                                }
+                            }
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()){
+                                Search.Next().Next().Previous(Search.Next().Previous());
+                                Search.Next().Previous().Next(Search.Next().Next());
+                                return;
+                            }
+                        }
                         Length++;
                         return;
                     }
@@ -77,16 +127,50 @@ public class LinkedList<T> {
                         Insert.Previous(Current.Previous());
                         Current.Previous(Insert);
                         Front = Insert;
+                        Search = Insert;
+                        while(Search.Next() != null){
+                            Search = Search.Next();
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()) {
+                                if (Search.Next() == null) {
+                                    Search.Previous().Next(null);
+                                    return;
+                                }
+                            }
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()){
+                                Search.Next().Next().Previous(Search.Next().Previous());
+                                Search.Next().Previous().Next(Search.Next().Next());
+                                return;
+                            }
+                        }
                         Length ++;
                     } else {
                         Insert = new Element<T>(value, null, null);
                         Insert.Previous(Current.Previous());
                         Current.Previous().Next(Insert);
                         Current.Previous(null);
+                        Search = Insert;
+                        while(Search.Next() != null){
+                            Search = Search.Next();
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()) {
+                                if (Search.Next() == null) {
+                                    Search.Previous().Next(null);
+                                    return;
+                                }
+                            }
+
+                            if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()){
+                                Search.Next().Next().Previous(Search.Next().Previous());
+                                Search.Next().Previous().Next(Search.Next().Next());
+                                return;
+                            }
+                        }
                         Length ++;
                     }
-                    return;
                 }
+                return;
             }
             if(Current.getNode().getWeight() > value.getWeight()){
                 if (Current == Front) {
@@ -95,12 +179,46 @@ public class LinkedList<T> {
                     Insert.Previous(Current.Previous());
                     Current.Previous(Insert);
                     Front = Insert;
+                    Search = Insert;
+                    while(Search.Next() != null){
+                        Search = Search.Next();
+
+                        if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()) {
+                            if (Search.Next() == null) {
+                                Search.Previous().Next(null);
+                                return;
+                            }
+                        }
+
+                        if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()){
+                            Search.Next().Next().Previous(Search.Next().Previous());
+                            Search.Next().Previous().Next(Search.Next().Next());
+                            return;
+                        }
+                    }
                     Length ++;
                 } else {
                     Insert = new Element<T>(value, null, null);
                     Insert.Previous(Current.Previous());
                     Current.Previous().Next(Insert);
                     Current.Previous(null);
+                    Search = Insert;
+                    while(Search.Next() != null){
+                        Search = Search.Next();
+
+                        if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()) {
+                            if (Search.Next() == null) {
+                                Search.Previous().Next(null);
+                                return;
+                            }
+                        }
+
+                        if(Search.getNode().getNode().getNode() == Insert.getNode().getNode().getNode()){
+                            Search.Next().Next().Previous(Search.Next().Previous());
+                            Search.Next().Previous().Next(Search.Next().Next());
+                            return;
+                        }
+                    }
                     Length ++;
                 }
                 return;
@@ -135,20 +253,5 @@ public class LinkedList<T> {
     }
     public int length() {
         return Length;
-    }
-
-    public QueueNode<T> search (QueueNode <T> value) {//Return true if the value exists in the Linked List
-        Element<T> Current = Front;
-        QueueNode<T> FoundValue = null;
-        if (!isEmpty()) {
-            while (Current.Next() != null) {
-                if (Current.getNode().getNode().getNode() == value.getNode().getNode()) {
-                    FoundValue = Current.getNode();
-                } else {
-                    Current = Current.Next();
-                }
-            }
-        }
-        return FoundValue;
     }
 }
