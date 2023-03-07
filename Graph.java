@@ -247,10 +247,7 @@ public class Graph<T>{
                         for (QueueNode<T> Node : PArray) {
                             if (Node.getNode().getNode() == Item.getNode()) {
                                 PathWeight = (Popped.getWeight() + Item.getWeight());
-                                Node.setWeight(PathWeight);
-                                Node.setPreviousNode(Popped);
-                                FinalPQ.append(Node);
-                                PathWeight = 0;
+                                FinalPQ.append(new QueueNode<>(Node.getNode(),PathWeight,Popped));
                                 break;
                             }
                         }
@@ -263,7 +260,7 @@ public class Graph<T>{
             Explored[i] = Popped;
         }
         for(QueueNode<T> P: Explored){
-            System.out.println("\n" + P.getNode().getNode() + " : " + P.getWeight() + " Path: " + P.Path());
+            System.out.println("\n" + P.getNode().getNode() + " : " + P.getWeight() + " |" +" Path: " + P.Path());
         }
     }
 }
