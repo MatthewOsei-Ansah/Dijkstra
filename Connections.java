@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Connections<T>{
-    private final int MAX_SIZE = 7;
-    private Connector[] Array = {null,null,null,null,null,null,null};
+    private final int MAX_SIZE = 10;
+    private Connector[] Array = new Connector[MAX_SIZE];
     private int length = 0;
 
     public ArrayList<String> getConnections()
@@ -32,7 +32,7 @@ public class Connections<T>{
         int i = 1;
         Integer Address;
         Connector<T> element = new Connector<T>(Value, Weight);
-        Address = Math.abs(Value.hashCode() % 7);
+        Address = Math.abs(Value.hashCode() % MAX_SIZE);
         for(Connector<T> value : Array){
             if(value == null){
                 continue;
