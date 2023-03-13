@@ -1,22 +1,18 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Graph<T>{
-    private final int MAX_SIZE = 7;
-    private Node[] Array = {null,null,null,null,null,null,null};
+    private final int MAX_SIZE = 10;
+    private Node[] Array = new Node[MAX_SIZE];
     private int length = 0;
 
     public String Display()
     {
-        int i = 0;
-        String ReturnValue;
         ArrayList<String> StringArray = new ArrayList<>(MAX_SIZE);
         for(Node<T> value: Array){
             if(value == null){
                 continue;
             }else{
                 StringArray.add(value.toString() + " : " + value.getHashTable() + "\n");
-                i++;
             }
         }
         return (StringArray).toString();
@@ -27,12 +23,12 @@ public class Graph<T>{
         boolean Placed = false;
         int i = 1;
         Integer Address;
-        Node<T> element = new Node<>(Value);
+        Node<T> element = new Node<T>(Value);
         Address = element.getKey().hashCode() % MAX_SIZE;
         for(Node<T> value : Array){
             if(value == null){
                 continue;
-            }else if(value.getKey() == element.getKey()){
+            }else if(value.getKey().equals(element.getKey())){
                 throw new IllegalArgumentException("A node with that name already exists within the hashtable");
             }
         }
@@ -109,11 +105,10 @@ public class Graph<T>{
         boolean found = false;
         Integer keyvalue = null;
 
-        for(Node Node : Array){
+        for(Node<T> Node : Array){
             if(Node == null){
                 continue;
             } else if (Node.getNode().equals(node)) {
-                found = true;
                 keyvalue = Node.getKey();
                 return keyvalue;
             }
@@ -127,7 +122,6 @@ public class Graph<T>{
 
 
     public T getNode(T node) {
-        int i = 0;
         boolean Found = false;
         Node<T> foundvalue = null;
         for(Node<T> value : Array){
@@ -136,13 +130,13 @@ public class Graph<T>{
             } else if (value.getNode().hashCode() == node.hashCode()) {
                 Found = true;
                 foundvalue = value;
-                return (T) foundvalue;
+                return foundvalue.getNode();
             }
         }
         if(!Found) {
             throw new IllegalArgumentException("Key does not exist (I think)");
         }
-        return (T) foundvalue;
+        return foundvalue.getNode();
     }
 
 
@@ -218,7 +212,7 @@ public class Graph<T>{
             } else if (Math.abs(value.getNode().hashCode()) == Math.abs(StartNode.hashCode())) {
                 continue;
             }else{
-                PArray[j] = new QueueNode(value, Integer.MAX_VALUE, null);
+                PArray[j] = new QueueNode<T>(value, Integer.MAX_VALUE, null);
                 j ++;
             }
         }
