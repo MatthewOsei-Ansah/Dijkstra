@@ -1,5 +1,3 @@
-package com.company;
-
 public class Element<T> {
     private Element<T> previous;
     private Element<T> next;
