@@ -2,9 +2,7 @@
 public class Connector<T> {
     private Integer Weight;
     private T Node;
-    private String Step1;
-    private String Step2;
-    private String Step3;
+
 
     public Connector(T node, Integer weight){
         this.Weight = weight;
@@ -28,6 +26,9 @@ public class Connector<T> {
     }
 
     public String Idk(T node){
+        String Step1;
+        String Step2;
+        String Step3;
         Step1 = node.toString();
         Step2 = this.Weight.toString();
         Step3 = Step1 + " : " + Step2;
